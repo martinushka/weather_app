@@ -21,17 +21,27 @@ module AccueWeather
 		end
 
 		def temperature_24_hours
-			hash = {}
+		  hash = {}
 
-			response[:body].each do |v|
-				key = Time.at(v['EpochTime']).to_datetime
+		  response[:body].each do |v|
+		    key = Time.at(v['EpochTime']).to_datetime
 
-				hash[key] = v['Temperature']['Metric'] if hash[key].blank?
-				hash[key].merge!(weather_text: weather_text)
-			end
+		    # Проверяем, существует ли ключ 'Temperature' и 'Metric' в объекте v
+		    if v['Temperature'] && v['Temperature']['Metric']
+		      # Создаем новый хэш, если он не существует
+		      hash[key] ||= {}
+		      
+		      # Добавляем значения в хэш для данного ключа
+		      hash[key]['Value'] = v['Temperature']['Metric']['Value']
+		      hash[key]['Unit'] = v['Temperature']['Metric']['Unit']
+		      hash[key]['UnitType'] = v['Temperature']['Metric']['UnitType']
+		      hash[key]['weather_text'] = weather_text
+		    end
+		  end
 
-			hash
+		  hash
 		end
+
 
 		def max_temp_in_24_hours
 			temperature_24_hours.values.map {|x| x['Value']}.max
