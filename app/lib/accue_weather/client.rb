@@ -21,6 +21,27 @@ module AccueWeather
 			)
 		end
 
+
+		def current_temperature(uniq_id:)
+			api_request(
+				url_with_path("/currentconditions/v1/#{uniq_id}"),
+				::AccueWeather::APIRequestFactory
+				.new
+				.current_temperature
+				.to_query
+			)
+		end
+
+		def historical_temperature(uniq_id:)
+			api_request(
+				url_with_path("/currentconditions/v1/#{uniq_id}historical/24"),
+				::AccueWeather::APIRequestFactory
+				.new
+				.historical_temperature
+				.to_query
+			)
+		end
+
 		private
 
 		def api_request(url, params = {})
@@ -35,7 +56,7 @@ module AccueWeather
 			end
 		end
 
-		http_request(&block)
+		def http_request(&block)
 			response = handle_request_exception(&block)
 
 			handle_response(response)
@@ -53,12 +74,12 @@ module AccueWeather
 
 		def handle_request_exception
 			yield
-		rescue ::OpenSSL::SSL::SSLError
-			raise_error 'AccueWeather returned invalid SSL data'
-		rescue ::Net::OpenTimeout
-			raise_error 'AccueWeather connection timed out'
-		rescue StandardError => e
-			raise_error "AccueWeather request failed due to #{e.class}"
+			rescue ::OpenSSL::SSL::SSLError
+				raise_error 'AccueWeather returned invalid SSL data'
+			rescue ::Net::OpenTimeout
+				raise_error 'AccueWeather connection timed out'
+			rescue StandardError => e
+				raise_error "AccueWeather request failed due to #{e.class}"
 		end
 
 		def raise_error(message)
@@ -72,7 +93,7 @@ module AccueWeather
 
 			def url_with_path(new_path)
 				new_uri = accue_weather_uri.dup
-				new_uri.path += [new_path].join('').squeeze( *other_strings '/')
+				new_uri.path += [new_path].join('').squeeze('/')
 				new_uri.to_s
 			end
 

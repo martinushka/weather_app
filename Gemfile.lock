@@ -253,8 +253,6 @@ GEM
       actionpack (>= 5.2)
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
-    stimulus-rails (1.2.2)
-      railties (>= 6.0.0)
     thor (1.2.2)
     timeout (0.4.0)
     trailblazer-option (0.1.2)
@@ -294,7 +292,6 @@ DEPENDENCIES
   rspec-rails (~> 6.0.0)
   rubocop
   sprockets-rails
-  stimulus-rails
   turbo-rails
   tzinfo-data
 

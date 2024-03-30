@@ -9,7 +9,6 @@ gem 'pg', '~> 1.2'
 gem 'puma', '~> 5.0'
 gem 'importmap-rails'
 gem 'turbo-rails'
-gem 'stimulus-rails'
 gem 'jbuilder'
 gem 'redis', '~> 4.0'
 gem 'bootsnap', require: false
