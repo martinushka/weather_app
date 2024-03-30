@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 require 'grape-swagger'
 
-# Root API class
 class RootAPI < Grape::API
   formatter :json, Grape::Formatter::Json
   prefix :api

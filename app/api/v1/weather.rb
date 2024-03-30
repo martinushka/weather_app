@@ -1,8 +1,5 @@
 # frozen_string_literal: true
-
-# Top level module
 module V1
-	# Weather API
 		class Weather < Grape::API
 		CITY = 'miami'
 
